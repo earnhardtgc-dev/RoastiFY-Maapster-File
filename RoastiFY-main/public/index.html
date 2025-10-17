@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Roast Master — TikTok-style</title>
+  <meta name="description" content="Upload a photo and get hilariously roasted by AI. Swipe like TikTok.">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand"><span class="fire">🔥</span> <span>AI ROAST MASTER</span></div>
+      <div class="actions">
+        <button class="btn" onclick="document.getElementById('fileInput').click()">Upload</button>
+        <button class="btn gold" onclick="openPaywall()">Go Pro</button>
+      </div>
+    </div>
+
+    <main class="feed" id="feed">
+      <!-- Cards injected by app.js -->
+    </main>
+
+    <div class="footer">
+      <div>Powered by <a href="https://supercool.com" target="_blank">SuperCool.com</a></div>
+    </div>
+  </div>
+
+  <!-- Paywall modal -->
+  <div class="modal-backdrop" id="paywall">
+    <div class="modal">
+      <h2>💎 UNLOCK SAVAGE MODE 💎</h2>
+      <p style="text-align:center;opacity:.9">Get the most brutal, hilarious roasts that will make you famous!</p>
+      <div class="price" onclick="alert('Stripe checkout would open here');">🔥 Savage Roast — $2.99</div>
+      <div class="price" onclick="alert('Stripe checkout would open here');">⭐ Celebrity Style — $4.99</div>
+      <div class="price" onclick="alert('Stripe checkout would open here');">♾️ Unlimited 30 days — $9.99</div>
+      <div class="price" onclick="alert('Stripe checkout would open here');">✨ Remove watermark — $1.99</div>
+      <div style="text-align:center;margin-top:10px">
+        <button class="btn" onclick="closePaywall()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

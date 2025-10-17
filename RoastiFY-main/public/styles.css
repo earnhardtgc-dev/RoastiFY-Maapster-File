@@ -1,0 +1,94 @@
+:root{
+  --bg-start:#667eea;
+  --bg-end:#764ba2;
+  --accent:#ff6b6b;
+  --accent-2:#ee5a24;
+  --gold-1:#f39c12;
+  --gold-2:#e67e22;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg,var(--bg-start),var(--bg-end));
+  color:#fff; overflow:hidden;
+}
+
+.app{
+  position:relative; height:100dvh; width:100%; display:flex; flex-direction:column;
+}
+
+.topbar{
+  position:fixed; top:0; left:0; right:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; z-index:20; backdrop-filter: blur(6px);
+}
+
+.brand{font-weight:800; letter-spacing:0.5px}
+.brand .fire{filter: drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+
+.actions{display:flex; gap:8px}
+.btn{
+  background: linear-gradient(45deg,var(--accent),var(--accent-2));
+  border:none; color:#fff; font-weight:700; padding:10px 14px; border-radius:999px;
+  cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.25); transition:transform .15s ease;
+}
+.btn:hover{ transform: translateY(-1px) }
+.btn.gold{ background: linear-gradient(45deg,var(--gold-1),var(--gold-2)); }
+
+.feed{
+  position:relative; height:100%; width:100%; margin-top:56px;
+  scroll-snap-type:y mandatory; overflow-y:scroll; overscroll-behavior:contain;
+}
+
+.card{
+  position:relative; height:calc(100dvh - 56px); width:100%;
+  display:flex; align-items:center; justify-content:center;
+  scroll-snap-align:start; padding:16px;
+}
+
+.card-inner{
+  width:min(720px,92%);
+  background: rgba(255,255,255,.1); border-radius:24px; padding:22px;
+  backdrop-filter: blur(10px); box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  text-align:center;
+}
+
+.title{font-size:clamp(22px,4.5vw,40px); font-weight:900; text-shadow:0 2px 10px rgba(0,0,0,.35);}
+.subtitle{opacity:.9; margin-top:8px}
+
+.stats{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:16px 0 6px}
+.stat{background:rgba(0,0,0,.25); padding:10px 14px; border-radius:12px}
+.stat .n{font-size:22px; font-weight:800; display:block}
+
+.upload{border:2px dashed rgba(255,255,255,.6); border-radius:22px; padding:26px; margin-top:16px; cursor:pointer}
+.upload:hover{background:rgba(255,255,255,.06)}
+.upload .big{font-size:42px; opacity:.9}
+
+.controls{display:flex; gap:10px; justify-content:center; margin-top:14px}
+
+.roast{
+  margin-top:14px; background:rgba(0,0,0,.35); border-radius:16px; padding:16px; display:none;
+}
+.roast.show{display:block}
+.watermark{
+  position:absolute; right:14px; bottom:12px; font-size:12px; opacity:.7;
+  background: rgba(0,0,0,.4); padding:6px 10px; border-radius:10px;
+}
+
+.badge{position:absolute; left:12px; top:12px; font-weight:800; background:rgba(0,0,0,.35); padding:6px 10px; border-radius:999px}
+
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:50;
+}
+.modal{ width:min(560px,92%); border-radius:20px; padding:22px; background: linear-gradient(135deg,var(--bg-start),var(--bg-end)); }
+.modal h2{ text-align:center; margin-bottom:8px }
+.price{ background:rgba(0,0,0,.25); border-radius:14px; padding:14px; margin-top:12px; cursor:pointer }
+.price:hover{ background:rgba(0,0,0,.35) }
+
+.footer{
+  position:fixed; bottom:8px; left:0; right:0; text-align:center; opacity:.9;
+}
+.footer a{ color:#ff6b6b; font-weight:800; text-decoration:none }
+.footer a:hover{text-decoration:underline}

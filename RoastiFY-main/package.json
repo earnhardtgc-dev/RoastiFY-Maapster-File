@@ -14,8 +14,7 @@
     "dotenv": "^16.3.1"
   },
   "engines": {
-    "node": ">=20.X"
-  }
-  ,
+    "node": "20.x"
+  },
   "license": "MIT"
 }

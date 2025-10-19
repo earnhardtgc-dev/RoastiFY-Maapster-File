@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roast'Em Ai — AI-Powered Roasts That Go Viral | Powered by SuperCool.com</title>
+  <meta name="description" content="Upload a photo, get hilariously roasted by AI, and share it everywhere! Roast'Em Ai creates viral-worthy roasts powered by SuperCool.com's advanced AI technology." />
+  
+  <!-- Your enhanced TikTok-style CSS with graffiti branding -->
+  <style>
+*,
+*::before,
+*::after{box-sizing:border-box}
+:root{
+  --bg:#0b0b0c; --panel:#121215; --ink:#f6f6f7; --ink-dim:#bdbdc4;
+  --acid:#ff2e83; --heat:#ff7a00; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --ring:0 0 0 3px rgba(255,46,131,.35);
+}
+html,body{height:100%}
+body{
+  margin:0; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  color:var(--ink); line-height:1.5;
+  background:
+    /* Large graffiti logo as background */
+    url('./roastemai_logo_background.png') no-repeat center 20%,
+    radial-gradient(1000px 600px at 10% -10%, rgba(255,46,131,.12), transparent 40%),
+    radial-gradient(800px 500px at 100% 0, rgba(255,122,0,.10), transparent 40%),
+    var(--bg);
+  background-size: 600px 600px, cover, cover, cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Additional graffiti elements */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('./roastemai_logo_optimized.png') no-repeat right bottom,
+    url('./roastemai_logo_optimized.png') no-repeat left top;
+  background-size: 200px 200px, 150px 150px;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:1rem clamp(1rem,3vw,2rem);
+  position:sticky; top:0; z-index:20;
+  background:linear-gradient(to bottom, rgba(11,11,12,.95), rgba(11,11,12,.8) 60%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom: 2px solid rgba(255,46,131,.2);
+}
+
+.brand{display:flex; align-items:center; gap:.9rem; position: relative; z-index: 2;}
+
+.brand__logo{
+  width:64px;
+  height:64px;
+  display:block;
+  background: url('./roastemai_logo_optimized.png') center/cover;
+  border-radius:12px;
+  box-shadow: 0 0 20px rgba(255,46,131,.3);
+  animation: graffiti-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes graffiti-glow {
+  from { 
+    box-shadow: 0 0 20px rgba(255,46,131,.3), 0 0 40px rgba(255,122,0,.2);
+    transform: scale(1);
+  }
+  to { 
+    box-shadow: 0 0 30px rgba(255,46,131,.5), 0 0 60px rgba(255,122,0,.3);
+    transform: scale(1.05);
+  }
+}
+
+.brand__name{
+  margin:0;
+  font-size:1.5rem;
+  letter-spacing:.4px;
+  background: linear-gradient(45deg, var(--acid), var(--heat));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255,46,131,.5);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.brand__tag{
+  margin:0;
+  color:var(--ink-dim);
+  font-size:.9rem;
+  font-weight: 600;
+}
+
+.accent{
+  color:var(--heat); 
+  text-shadow:0 0 12px rgba(255,122,0,.3);
+  animation: text-flicker 2s infinite alternate;
+}
+
+@keyframes text-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.actions{display:flex; gap:.6rem; position: relative; z-index: 2;}
+
+.btn{
+  --btn-bg:transparent; --btn-ink:var(--ink);
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.7rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,.12);
+  background:var(--btn-bg); color:var(--btn-ink); text-decoration:none; font-weight:600;
+  transition:transform .08s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+  cursor:pointer;
+}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn:focus-visible{outline:none; box-shadow:var(--ring)}
+.btn--solid{
+  --btn-bg:linear-gradient(90deg, var(--acid), var(--heat)); 
+  border:none; 
+  color:#0b0b0c;
+  box-shadow: 0 4px 15px rgba(255,46,131,.3);
+}
+.btn--ghost:hover{border-color:rgba(255,255,255,.3)}
+.btn--lg{padding:.9rem 1.2rem; font-size:1.05rem}
+
+.hero{
+  display:grid; 
+  place-items:center; 
+  padding:clamp(1.2rem,5vw,2.4rem);
+  position: relative;
+  z-index: 2;
+}
+
+.card{
+  width:min(920px,92vw); 
+  background:
+    linear-gradient(180deg, rgba(255,46,131,.08), transparent 30%), 
+    rgba(18,18,21,.95);
+  border:2px solid rgba(255,46,131,.2); 
+  border-radius:var(--radius); 
+  box-shadow:var(--shadow), 0 0 40px rgba(255,46,131,.1);
+  padding:clamp(1.2rem,4vw,2.2rem);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Graffiti accent in card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: url('./roastemai_logo_optimized.png') center/cover;
+  opacity: 0.03;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+.hero__logo-wrap{
+  display:grid; 
+  place-items:center; 
+  margin-bottom:.6rem;
+  position: relative;
+}
+
+.hero__logo{
+  width:min(180px,40vw); 
+  height:min(180px,40vw);
+  background: url('./roastemai_logo_optimized.png') center/cover;
+  border-radius: 20px;
+  filter:drop-shadow(0 12px 30px rgba(255,46,131,.3));
+  animation: logo-pulse 4s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 12px 30px rgba(255,46,131,.3));
+  }
+  50% { 
+    transform: scale(1.05);
+    filter: drop-shadow(0 20px 40px rgba(255,46,131,.5));
+  }
+}
+
+.hero__title{
+  margin:.4rem 0 0; 
+  font-size:clamp(1.8rem, 2.6vw + 1rem, 2.6rem);
+  text-align: center;
+  background: linear-gradient(45deg, var(--acid), var(--heat), var(--acid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 30px rgba(255,46,131,.3);
+}
+
+.hero__subtitle{
+  margin:.6rem 0 1.2rem; 
+  color:var(--ink-dim);
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.cta{display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; margin:1rem 0 1.1rem; justify-content: center;}
+
+.upload{
+  display:inline-flex; align-items:center; gap:.6rem; padding:.85rem 1.05rem;
+  border-radius:12px; border:2px dashed var(--acid); color:var(--ink); cursor:pointer;
+  user-select:none; transition:all .3s ease;
+  background: rgba(255,46,131,.05);
+}
+.upload:hover{
+  border-color:var(--heat); 
+  background:rgba(255,122,0,.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,46,131,.2);
+}
+.upload:focus-visible{outline:none; box-shadow:var(--ring)}
+.upload input{display:none}
+.upload__text{font-weight:600}
+
+.social-share{display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin-top:1.2rem}
+.social-btn{
+  border:none; border-radius:10px; padding:.55rem .8rem; font-weight:700; color:#fff; cursor:pointer; 
+  display:inline-flex; align-items:center; gap:.45rem;
+  transition: all .3s ease;
+}
+.social-btn:hover{
+  opacity:.9; 
+  transform:translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,.3);
+}
+.fb{background:#1877f2}
+.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.tt{background:#000}
+.yt{background:#ff0000}
+
+.ticks{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.5rem .9rem;
+  margin:1rem 0 0; padding:0; list-style:none; color:var(--ink-dim);
+}
+.ticks li{
+  background: rgba(255,46,131,.05);
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 3px solid var(--acid);
+}
+.ticks li::before{content:"✓"; color:var(--acid); margin-right:.5rem; font-weight: bold;}
+
+.footer{
+  display:grid; 
+  place-items:center; 
+  padding:2.2rem 1rem 3rem; 
+  color:var(--ink-dim); 
+  gap:.4rem;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(11,11,12,.9), transparent);
+}
+.footer__nav{display:inline-flex; gap:.6rem; align-items:center}
+.footer__nav a{color:var(--ink-dim); text-decoration:none; transition: color .3s ease;}
+.footer__nav a:hover{color:var(--acid)}
+
+/* Enhanced features */
+.social-proof {
+  background: linear-gradient(135deg, var(--acid), var(--heat)); 
+  color: white; 
+  padding: 20px; 
+  border-radius: 15px; 
+  margin: 25px 0; 
+  text-align: center;
+  animation: pulse-glow 3s infinite;
+  border: 2px solid rgba(255,255,255,.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-proof::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--acid), var(--heat), var(--acid));
+  z-index: -1;
+  border-radius: 15px;
+  animation: border-glow 2s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255,46,131,.3);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(255,46,131,.5);
+  }
+}
+
+@keyframes border-glow {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.upgrade-teaser {
+  background: 
+    linear-gradient(135deg, rgba(255,46,131,0.1), rgba(255,122,0,0.1));
+  padding: 25px; 
+  border-radius: 15px; 
+  margin: 25px 0; 
+  text-align: center; 
+  border: 3px dashed var(--acid);
+  animation: upgrade-glow 4s ease-in-out infinite alternate;
+  position: relative;
+}
+
+@keyframes upgrade-glow {
+  from { 
+    border-color: var(--acid);
+    box-shadow: 0 0 20px rgba(255,46,131,.2);
+  }
+  to { 
+    border-color: var(--heat);
+    box-shadow: 0 0 30px rgba(255,122,0,.3);
+  }
+}
+
+.testimonials {
+  margin-top: 30px; 
+  padding: 25px; 
+  background: 
+    linear-gradient(135deg, rgba(255,46,131,.03), rgba(255,122,0,.03)),
+    var(--panel);
+  border-radius: 15px;
+  border: 2px solid rgba(255,46,131,.1);
+  position: relative;
+}
+
+.testimonials::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  background: url('./roastemai_logo_optimized.png') center/cover;
+  opacity: 0.1;
+  border-radius: 50%;
+}
+
+.testimonials blockquote {
+  margin: 0 0 20px 0; 
+  padding: 18px; 
+  background: rgba(255,46,131,.05); 
+  border-radius: 12px; 
+  border-left: 4px solid var(--acid);
+  transition: all .3s ease;
+}
+
+.testimonials blockquote:hover {
+  background: rgba(255,46,131,.08);
+  transform: translateX(5px);
+  border-left-width: 6px;
+}
+
+.supercool-branding {
+  background: linear-gradient(45deg, var(--acid), var(--heat));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.roast-result {
+  margin-top: 30px;
+  animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+  from { 
+    transform: translateY(50px) scale(0.95); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0) scale(1); 
+    opacity: 1; 
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width:560px){ 
+  .brand__text{display:none} 
+  .btn{padding:.6rem .9rem}
+  .hero__title{font-size: 1.8rem;}
+  body {
+    background-size: 400px 400px, cover, cover, cover;
+  }
+  .brand__logo {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Graffiti text effects */
+.graffiti-text {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, var(--acid), var(--heat), var(--acid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    3px 3px 0px rgba(0,0,0,.8),
+    6px 6px 10px rgba(255,46,131,.3);
+}
+
+/* Street art style elements */
+.street-art-accent {
+  position: relative;
+}
+
+.street-art-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--acid), var(--heat), transparent);
+  border-radius: 2px;
+}
+  </style>
+</head>
+<body>
+  <!-- Header with enhanced graffiti branding -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand__logo"></div>
+      <div class="brand__text">
+        <h1 class="brand__name street-art-accent">Roast'Em <span class="accent">Ai</span></h1>
+        <p class="brand__tag">AI-Powered Roasts • <span class="supercool-branding">Powered by SuperCool.com</span></p>
+      </div>
+    </div>
+    <nav class="actions" aria-label="Primary">
+      <button class="btn btn--ghost">📤 Share</button>
+      <button class="btn btn--ghost">🔗 Copy Link</button>
+      <button class="btn btn--solid">⚡ Go Pro</button>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <section class="card">
+      <div class="hero__logo-wrap">
+        <div class="hero__logo"></div>
+      </div>
+      
+      <!-- Graffiti-style headline -->
+      <h2 class="hero__title graffiti-text">Upload. Get Roasted by AI. Go Viral. 🤖🔥</h2>
+      <p class="hero__subtitle">Drop a pic and let <span class="supercool-branding">SuperCool.com's</span> AI create hilarious roasts that are perfect for sharing everywhere!</p>
+
+      <!-- Enhanced social proof banner -->
+      <div class="social-proof">
+        <p style="margin: 0; font-weight: bold; font-size: 18px;">🔥 <span>2.8M+</span> people roasted • <span>847K+</span> shares • <span>156</span> went viral today!</p>
+      </div>
+
+      <!-- Upload and roast section -->
+      <div class="cta">
+        <label class="upload" role="button" tabindex="0">
+          <span class="upload__text">📸 Upload a photo to get roasted</span>
+        </label>
+        <button class="btn btn--solid btn--lg">🤖 Start AI Roast</button>
+      </div>
+
+      <!-- Enhanced value proposition -->
+      <ul class="ticks">
+        <li>🤖 Advanced AI roasting technology</li>
+        <li>📱 Optimized for viral social sharing</li>
+        <li>⚡ Instant results in seconds</li>
+        <li>🔥 Premium upgrade available</li>
+        <li>🚀 Powered by SuperCool.com</li>
+      </ul>
+
+      <!-- Enhanced upgrade teaser -->
+      <div class="upgrade-teaser">
+        <h3 style="color: var(--acid); margin: 0 0 15px 0; font-size: 24px;" class="graffiti-text">🔥 Want Savage Mode? 🔥</h3>
+        <p style="margin: 0 0 20px 0; font-size: 16px;">Unlimited roasts • Premium AI styles • No watermarks • Viral optimization</p>
+        <button class="btn btn--solid" style="padding: 15px 30px; font-size: 18px;">⚡ Upgrade for $2.99</button>
+      </div>
+
+      <!-- Example roast result with graffiti styling -->
+      <div class="roast-result">
+        <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, var(--acid), var(--heat)); border-radius: 20px; color: white; text-align: center; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: url('./roastemai_logo_optimized.png') center/cover; opacity: 0.1; transform: rotate(15deg);"></div>
+          <h3 style="margin: 0 0 20px 0; font-size: 28px;" class="graffiti-text">🔥 AI ROAST RESULTS 🔥</h3>
+          <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; margin-bottom: 25px; border: 2px solid rgba(255,255,255,.2);">
+            <p style="font-size: 20px; line-height: 1.4; margin: 0; font-weight: 600;">"Your selfie game is so strong, even my AI circuits are confused whether to roast you or ask for photography tips! 📸✨"</p>
+          </div>
+          <div style="display: flex; justify-content: space-around; margin-bottom: 25px; font-size: 16px; font-weight: bold;">
+            <span>🎯 Roast #1</span>
+            <span>📤 0 Shares</span>
+            <span>🤖 AI Powered</span>
+          </div>
+          <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn--solid" style="background: white; color: var(--acid); font-weight: bold;">📤 Share This Roast</button>
+            <button class="btn btn--ghost" style="border: 3px solid white; color: white; font-weight: bold;">🎲 Roast Again</button>
+            <button class="btn btn--solid" style="background: var(--heat); color: white; font-weight: bold;">⚡ Get Savage Mode</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social sharing buttons -->
+      <div class="social-share">
+        <p style="text-align: center; margin-bottom: 20px; font-weight: bold; color: var(--ink); font-size: 18px;" class="street-art-accent">📤 Share Roast'Em Ai with friends:</p>
+        <button class="social-btn fb">📘 Facebook</button>
+        <button class="social-btn ig">📷 Instagram</button>
+        <button class="social-btn tt">🎵 TikTok</button>
+        <button class="social-btn yt">📺 YouTube</button>
+      </div>
+
+      <!-- Enhanced testimonials with graffiti accents -->
+      <div class="testimonials">
+        <h3 style="text-align: center; margin-bottom: 25px; color: var(--ink); font-size: 24px;" class="graffiti-text">💬 What People Are Saying:</h3>
+        <div style="display: grid; gap: 20px;">
+          <blockquote>
+            <p style="margin: 0; font-style: italic; font-size: 16px;">"This AI roasted me so good I had to upgrade! Best $3 I ever spent 😂"</p>
+            <footer style="margin-top: 15px; font-size: 14px; color: var(--ink-dim); font-weight: bold;">— @sarah_viral (2.1M TikTok followers)</footer>
+          </blockquote>
+          <blockquote>
+            <p style="margin: 0; font-style: italic; font-size: 16px;">"My roast got 50K retweets! SuperCool.com's AI is insane 🔥"</p>
+            <footer style="margin-top: 15px; font-size: 14px; color: var(--ink-dim); font-weight: bold;">— @comedy_king (847K followers)</footer>
+          </blockquote>
+          <blockquote>
+            <p style="margin: 0; font-style: italic; font-size: 16px;">"Finally an AI that understands comedy. Worth every penny!"</p>
+            <footer style="margin-top: 15px; font-size: 14px; color: var(--ink-dim); font-weight: bold;">— @influencer_life (1.5M followers)</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Enhanced footer with SuperCool.com graffiti branding -->
+  <footer class="footer">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <p style="margin: 0; font-size: 20px; font-weight: bold;" class="graffiti-text">
+        🚀 Powered by <span class="supercool-branding">SuperCool.com</span> — The Future of AI Applications
+      </p>
+      <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">
+        Advanced AI technology • Viral optimization • Instant deployment
+      </p>
+    </div>
+    
+    <p style="font-size: 16px;">© 2025 Roast'Em Ai. All rights reserved.</p>
+    <nav class="footer__nav">
+      <a href="#">Terms</a>
+      <span>•</span>
+      <a href="#">Privacy</a>
+      <span>•</span>
+      <a href="#">Contact</a>
+      <span>•</span>
+      <a href="#" class="supercool-branding">SuperCool.com</a>
+    </nav>
+  </footer>
+
+  <script>
+    // Demo functionality for preview
+    document.querySelector('.btn--lg').addEventListener('click', () => {
+      document.querySelector('.roast-result').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Enhanced graffiti effects
+    function addGraffitiEffects() {
+      // Add random sparkle effects
+      setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.style.cssText = `
+          position: fixed;
+          width: 4px;
+          height: 4px;
+          background: var(--acid);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 1000;
+          animation: sparkle 2s linear forwards;
+          left: ${Math.random() * window.innerWidth}px;
+          top: ${Math.random() * window.innerHeight}px;
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes sparkle {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+          }
+        `;
+        document.head.appendChild(style);
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => sparkle.remove(), 2000);
+      }, 3000);
+    }
+
+    // Initialize graffiti effects
+    document.addEventListener('DOMContentLoaded', addGraffitiEffects);
+  </script>
+</body>
+</html>
